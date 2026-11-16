@@ -1,0 +1,28 @@
+services:
+  app1:
+    build: ./app1
+    container_name: app1
+    networks:
+      - tplb
+
+  app2:
+    build: ./app2
+    container_name: app2
+    networks:
+      - tplb
+
+  nginx:
+    build: ./nginx
+    container_name: nginx-lb
+    ports:
+      - "8080:80"
+    depends_on:
+      - app1
+      - app2
+    networks:
+      - tplb
+
+networks:
+  tplb:
+    driver: bridge
+
